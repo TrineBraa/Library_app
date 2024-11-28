@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 
 
-
+#For the open API from Google books
 @app.route("/books/<string:book_id>", methods=["GET"])
 def get_books(book_id):
     load_dotenv()
@@ -19,6 +19,8 @@ def get_books(book_id):
     except request.exceptions.RequestException as e:
         return jsonify({"error": str(e)}), 500
 
+
+#For the personal library
 @app.route("/Library", methods=["GET"])
 def get_library():
     my_books = Book.query.all()

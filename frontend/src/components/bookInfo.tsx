@@ -7,12 +7,16 @@ interface BookInfo {
     };
 }
 
+
 interface BookItem {
     volumeInfo: BookInfo
 }
 
-interface BookData {
+export interface BookData {
     items?: BookItem[];
 }
 
-export default BookData
+export interface Book extends BookInfo {
+    description?: string;
+}
+
