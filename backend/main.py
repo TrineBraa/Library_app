@@ -1,7 +1,7 @@
 from flask import request, jsonify
 import requests
 from config import app, db
-from model import Book
+from model import Book, User, UserLibrary
 import os
 from dotenv import load_dotenv
 
@@ -55,10 +55,40 @@ def delete_book(book_id):
         return jsonify ({"message":"Book not found"}), 404
     
     db.session.delete(book)
-    db.session.comit()
+    db.session.commit()
 
     return jsonify({"message":"Book removed from library"}), 200
 
+#For users
+@app.route("/register_user", methods = ["POST"])
+def add_new_user():
+        username = request.json.get("username")
+        password = request.json.get("password")
+
+        if not username or not password:
+            return jsonify({"message": "Username and password are required"}), 400
+        
+        new_user = User(username=username)
+        new_user.set_password(password)
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+        except Exception as e:
+            return jsonify({"message": str(e)}), 500
+        return jsonify({"message": "user registered successfully!"}), 200
+
+@app.route("/delete_user/<int:user_id>", methods =["DELETE"])
+def delete_user(user_id):
+    user = User.query.get(user_id)
+
+    if not user:
+        return jsonify ({"message": "User not found"}), 404
+    
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"message":"User deleted"})
 
 if __name__ =="__main__":
     with app.app_context():
