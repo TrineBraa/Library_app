@@ -1,31 +1,32 @@
 import { useState } from "react"
 
 
-const Register: React.FC = () => {
+const Register = () => {
     const [userName, setUserName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [message, setMessage] = useState<string>("")
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (!userName || !password) {
-            setMessage("Username and password required.")
-            return;
-        };
-
-        const user = {
-            username: userName,
-            password,
-        };
-
+        // const user = {
+        //     userName,
+        //     password,
+        // };
+ 
         const url = "http://127.0.0.1:5000/register_user"
         const options = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify({username:userName, password:password})
+        };
+
+        if (!userName || !password) {
+            setMessage("Username and password required.")
+            return;
         };
 
         try{
@@ -45,31 +46,32 @@ const Register: React.FC = () => {
                 setMessage("An unexpected error occurred.")
             }
         }
+    }
 
     return (
-       <div>
-        <h3>Register a new user:</h3>
-        <form onSubmit = {onSubmit}>
-                    <input
-                        type="text"
-                        className=""
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                        placeholder="Enter username"/>
-                    <input
-                    type="password"
-                    className=""
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"/>
-                <div>
-                    <button type="submit">Create User</button>
-                </div>
-        </form>
-        {message && <p>{message}</p>}
+       <div className="bg-cyan-900 px-4 py-6 text-white">
+            <h3>Register a new user:</h3>
+            <form onSubmit = {onSubmit}>
+                        <input
+                            type="text"
+                            className="my-2 px-3 text-black"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="Enter username"/><br/>
+                        <input
+                        type="password"
+                        className="my-2 px-3 text-black"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter password"/>
+                    <div>
+                        <button className="bg-teal-600 border px-1 mx-2 hover:bg-teal-950" type="submit">Create User</button>
+                    </div>
+            </form>
+            {message && <p>{message}</p>}
         </div> 
     )
-    }
-}
+    
+};
 
 export default Register

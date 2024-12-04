@@ -68,7 +68,7 @@ def add_new_user():
         if not username or not password:
             return jsonify({"message": "Username and password are required"}), 400
         
-        new_user = User(username=username)
+        new_user = User(userName=username)
         new_user.set_password(password)
 
         try:
@@ -89,6 +89,9 @@ def delete_user(user_id):
     db.session.commit()
 
     return jsonify({"message":"User deleted"})
+
+
+
 
 if __name__ =="__main__":
     with app.app_context():

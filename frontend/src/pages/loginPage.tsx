@@ -1,11 +1,13 @@
 import NavBar from "../components/navbar"
+import Register from "../components/register"
 
 function LoginPage() {
   return (
     <div>
         <NavBar/>
-        
-      <p>Log in page</p>
+        <div className="flex justify-center">
+        <Register/>
+        </div>
     </div>
   )
 }
