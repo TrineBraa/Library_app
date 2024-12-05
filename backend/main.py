@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, session
 import requests
 from config import app, db
 from model import Book, User, UserLibrary
@@ -90,8 +90,25 @@ def delete_user(user_id):
 
     return jsonify({"message":"User deleted"})
 
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.json.get("username")
+    password = request.json.get("password")
 
+    user = User.query.filter_by(username).first()
 
+    if user is None:
+        return jsonify({"error": "No user found"}), 400
+    if not User.check_password(password):
+        return jsonify({"Error": "Incorrect Password"}), 400
+    
+    session["username"] = username
+    return jsonify({ "username": username,})
+
+@app.route("/logout", methods = ["POST"])
+def log_out():
+    session.pop("username")
+    return "log out successfull, 200"
 
 if __name__ =="__main__":
     with app.app_context():

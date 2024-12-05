@@ -54,13 +54,13 @@ const Register = () => {
             <form onSubmit = {onSubmit}>
                         <input
                             type="text"
-                            className="my-2 px-3 text-black"
+                            className="my-2 px-5 text-black"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                             placeholder="Enter username"/><br/>
                         <input
                         type="password"
-                        className="my-2 px-3 text-black"
+                        className="my-2 px-5 text-black"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter password"/>

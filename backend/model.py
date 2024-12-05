@@ -1,5 +1,6 @@
 from config import db
 from flask_bcrypt import Bcrypt
+from uuid import uuid
 
 bcrypt = Bcrypt()
 
@@ -30,7 +31,7 @@ class User(db.Model):
 
     id = db.Column(db.Integer, unique = True, nullable = False, primary_key = True, autoincrement = True)
     username = db.Column (db.String(120), unique = False, nullable = False)
-    password = db.Column (db.String(128), nullable = False)
+    password = db.Column (db.String(30), nullable = False)
 
     books = db.relationship('UserLibrary', back_populates='user')
 
